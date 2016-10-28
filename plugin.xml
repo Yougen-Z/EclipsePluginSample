@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="ZafinPluginTest.category.zafinwizards"
+            name="Zafin Wizards">
+      </category>
+      <category
+            id="ZafinPluginTest.category.ArtifactWizards"
+            name="Artifact"
+            parentCategory="ZafinPluginTest.category.zafinwizards">
+      </category>
+      <wizard
+            category="ZafinPluginTest.category.zafinwizards"
+            class="zafinplugintest.NewModuleWizard"
+            hasPages="true"
+            icon="icons/open_console_obj.png"
+            id="ZafinPluginTest.newmodulewizard"
+            name="Module Creation Wizard"
+            project="true">
+      </wizard>
+      <wizard
+            category="ZafinPluginTest.category.zafinwizards"
+            class="zafinplugintest.NewModelWizard"
+            hasPages="true"
+            icon="icons/plugin_depend.png"
+            id="ZafinPluginTest.wizard.newmodelcreation"
+            name="Model Creation Wizard"
+            project="false">
+      </wizard>
+      <wizard
+            category="ZafinPluginTest.category.zafinwizards"
+            class="zafinplugintest.NewViewWizard"
+            hasPages="true"
+            icon="icons/target_profile_xml_obj.png"
+            id="ZafinPluginTest.wizard.newviewcreation"
+            name="View Creation Wizard"
+            project="false">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="handlers.NewModuleCreationHandler"
+            commandId="New_Module_Creation">
+      </handler>
+      <handler
+            class="handlers.NewModelCreationHandler"
+            commandId="New_Model_Creation">
+      </handler>
+      <handler
+            class="handlers.NewViewCreationHandler"
+            commandId="New_View_Creation">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="Module"
+            defaultHandler="handlers.NewModuleCreationHandler"
+            id="New_Module_Creation"
+            name="New Module Creation">
+      </command>
+      <command
+            categoryId="Artifact"
+            defaultHandler="handlers.NewModelCreationHandler"
+            id="New_Model_Creation"
+            name="New Model Creation">
+      </command>
+      <command
+            categoryId="Artifact"
+            defaultHandler="handlers.NewViewCreationHandler"
+            id="New_View_Creation"
+            name="New View Creation">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?after=window">
+         <menu
+               id="Zafin_Wizards"
+               label="Zafin Wizards">
+            <command
+                  commandId="New_Module_Creation"
+                  icon="icons/open_console_obj.png"
+                  id="New_Module_Creation_In_Menu"
+                  label="New Module Creation In Menu"
+                  mnemonic="M"
+                  style="push">
+            </command>
+            <menu
+                  icon="icons/plugin_depend.png"
+                  id="New_Artifact_Wizards"
+                  label="New Artifact Wizards">
+               <command
+                     commandId="New_Model_Creation"
+                     icon="icons/plugin_depend.png"
+                     id="New_Model_Creation_In_Menu"
+                     label="New Model Creation In Menu"
+                     mnemonic="M"
+                     style="push">
+               </command>
+               <command
+                     commandId="New_View_Creation"
+                     icon="icons/target_profile_xml_obj.png"
+                     id="New_View_Creation_In_Menu"
+                     label="New View Creation In Menu"
+                     mnemonic="V"
+                     style="push">
+               </command>
+            </menu>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.workbench.file?after=print">
+         <command
+               commandId="New_Module_Creation"
+               icon="icons/open_console_obj.png"
+               id="New_Module_Creation_In_Menu"
+               label="New Module"
+               mnemonic="M"
+               style="push">
+         </command>
+         <menu
+               id="New_Artifact_Wizards"
+               label="New Artifact Wizards">
+          </menu>
+         <command
+               commandId="New_Model_Creation"
+               icon="icons/plugin_depend.png"
+               id="New_Model_Creation_In_Menu"
+               label="New Model"
+               mnemonic="M"
+               style="push">
+         </command>
+         <command
+               commandId="New_View_Creation"
+               icon="icons/target_profile_xml_obj.png"
+               id="New_View_Creation_In_Menu"
+               label="New View"
+               mnemonic="V"
+               style="push">
+         </command>
+        </menuContribution>
+   </extension>
+
+</plugin>
