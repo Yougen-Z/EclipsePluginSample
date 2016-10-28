@@ -6,7 +6,7 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 
-public class NewModuleWizard extends Wizard implements INewWizard {
+public class NewModuleWizard extends AbstractNewArtifactCreationWizard {
 
 	private WizardNewProjectCreationPage page_;
 
@@ -23,10 +23,6 @@ public class NewModuleWizard extends Wizard implements INewWizard {
 		addPage(page_);
 	}
 
-	@Override
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
-
-	}
 
 	@Override
 	public boolean performFinish() {

@@ -3,7 +3,7 @@ package zafinplugintest;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 
-public class AbstractWizardPage extends WizardPage {
+public abstract class AbstractWizardPage extends WizardPage {
 //    private String pageName;
 //    private String title;
 //    private String description;
@@ -14,7 +14,6 @@ public class AbstractWizardPage extends WizardPage {
 
 	@Override
 	public void createControl(Composite parent) {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -1,14 +1,15 @@
 package zafinplugintest;
 
-
-public class NewModelWizard extends AbstractNewWizard {
+public class NewModelWizard extends AbstractNewArtifactCreationWizard {
 	private ModelWizardPage page1;
 	private NewDescriptionPage page2;
 	
+	@Override
 	public String getWindowTitle() {
 		return "New Model Creation Wizard";
 	}
 
+	@Override
 	public void addPages() {
 		super.addPages();
 		
@@ -17,7 +18,8 @@ public class NewModelWizard extends AbstractNewWizard {
 		addPage(page1);
 		addPage(page2);
 	}
-	
+
+	@Override
 	public boolean performFinish() {		
 		page1.displayResult();
 		

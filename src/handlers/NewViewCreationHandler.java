@@ -5,7 +5,7 @@ import org.eclipse.core.commands.ExecutionException;
 
 import zafinplugintest.NewViewWizard;
 
-public class NewViewCreationHandler extends AbstractNewCreationHandler {
+public class NewViewCreationHandler extends AbstractNewArtifactCreationHandler {
 
 	@Override
     public Object execute(ExecutionEvent event) throws ExecutionException {

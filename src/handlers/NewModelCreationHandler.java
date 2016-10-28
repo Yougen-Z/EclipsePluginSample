@@ -5,7 +5,7 @@ import org.eclipse.core.commands.ExecutionException;
 
 import zafinplugintest.NewModelWizard;
 
-public class NewModelCreationHandler extends AbstractNewCreationHandler {
+public class NewModelCreationHandler extends AbstractNewArtifactCreationHandler {
 
 	@Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
