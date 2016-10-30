@@ -7,18 +7,25 @@ import org.eclipse.ui.IWorkbench;
 
 public abstract class AbstractNewArtifactCreationWizard  extends Wizard implements INewWizard {
 
+	private IWorkbench workbench;
+	private IStructuredSelection selection;
+	
 	public AbstractNewArtifactCreationWizard() {
 		super();
-		setNeedsProgressMonitor(true);
-	}
-	
-	@Override
-	public String getWindowTitle() {
-		return "New Artifact Creation";
+		setNeedsProgressMonitor(false);
 	}
 	
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		
+		this.workbench = workbench;
+		this.selection = selection;
+	}
+	
+	public IWorkbench getWorkbench() {
+		return workbench;
+	}
+
+	public IStructuredSelection getSelection() {
+		return selection;
 	}
 }

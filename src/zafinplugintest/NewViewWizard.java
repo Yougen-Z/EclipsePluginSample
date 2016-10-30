@@ -12,7 +12,7 @@ public class NewViewWizard extends AbstractNewArtifactCreationWizard {
 	public void addPages() {
 		super.addPages();
 		
-		page1 = new ViewWizardPage("Basic View Info");
+		page1 = new ViewWizardPage();
 		addPage(page1);
 	}
 
