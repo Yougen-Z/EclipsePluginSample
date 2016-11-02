@@ -4,7 +4,7 @@ import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 
 public class NewModuleWizard extends AbstractNewArtifactCreationWizard {
 
-	private WizardNewProjectCreationPage page_;
+	private WizardNewProjectCreationPage wizardNewProjectCreationPage;
 
 	public NewModuleWizard() {
 		setWindowTitle("Create a New Module");
@@ -13,10 +13,10 @@ public class NewModuleWizard extends AbstractNewArtifactCreationWizard {
 	@Override
 	public void addPages() {
 		super.addPages();
-		page_ = new WizardNewProjectCreationPage("New Model");
-		page_.setTitle("Title here");
-		page_.setDescription("Description here");
-		addPage(page_);
+		wizardNewProjectCreationPage = new WizardNewProjectCreationPage("New Model");
+		wizardNewProjectCreationPage.setTitle("Title here");
+		wizardNewProjectCreationPage.setDescription("Description here");
+		addPage(wizardNewProjectCreationPage);
 	}
 
 
