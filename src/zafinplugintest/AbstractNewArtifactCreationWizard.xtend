@@ -12,7 +12,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 	new() {
 		super()
-		setNeedsProgressMonitor(false)
+		needsProgressMonitor = false
 	}
 
 	override void init(IWorkbench workbench, IStructuredSelection selection) {

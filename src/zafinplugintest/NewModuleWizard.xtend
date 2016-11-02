@@ -12,8 +12,8 @@ class NewModuleWizard extends AbstractNewArtifactCreationWizard {
 	override void addPages() {
 		super.addPages()
 		wizardNewProjectCreationPage = new WizardNewProjectCreationPage("New Model")
-		wizardNewProjectCreationPage.setTitle("Title here")
-		wizardNewProjectCreationPage.setDescription("Description here")
+		wizardNewProjectCreationPage.title = "Title here"
+		wizardNewProjectCreationPage.description = "Description here"
 		wizardNewProjectCreationPage.addPage
 	}
 }

@@ -1,13 +1,13 @@
 package zafinplugintest;
 
+import com.zafin.plugin.extensionmethods.SWTLayoutExtensions;
+import com.zafin.plugin.extensionmethods.SWTWidgetExtensions;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import zafinplugintest.AbstractArtifactWizardPage;
@@ -25,41 +25,32 @@ public class ModelWizardPage extends AbstractArtifactWizardPage {
   }
   
   @Override
-  protected void addCustomControls(final Composite container) {
-    this.addModelTypeControl(container);
-    this.addModifiersControl(container);
-    this.addParentModelControl(container);
+  protected void addCustomControls(final Composite parent) {
+    this.addModelTypeControl(parent);
+    this.addModifiersControl(parent);
+    this.addParentModelControl(parent);
   }
   
-  private void addModelTypeControl(final Composite container) {
-    Label _label = new Label(container, SWT.NONE);
-    _label.setText(Messages.ModelWizardPage_Type);
-    Combo _combo = new Combo(container, (SWT.DROP_DOWN | SWT.READ_ONLY));
-    this.modelType = _combo;
-    GridData _gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-    this.modelType.setLayoutData(_gridData);
+  private void addModelTypeControl(final Composite parent) {
+    SWTWidgetExtensions.addLabel(parent, Messages.ModelWizardPage_Type, SWT.NONE);
+    GridData _newGridData = SWTLayoutExtensions.newGridData();
+    this.modelType.setLayoutData(_newGridData);
     String[] items = { Messages.ModelWizardPage_ModelType_Model, Messages.ModelWizardPage_ModelType_Component, Messages.ModelWizardPage_ModelType_Enum };
-    this.modelType.setItems(items);
-    this.modelType.setEnabled(true);
+    Combo _addCombo = SWTWidgetExtensions.addCombo(parent, items, (SWT.DROP_DOWN | SWT.READ_ONLY));
+    this.modelType = _addCombo;
   }
   
-  private void addModifiersControl(final Composite container) {
-    Label _label = new Label(container, SWT.NONE);
-    _label.setText("Modifier:");
-    GridLayout layout = new GridLayout(3, true);
-    layout.marginWidth = 0;
-    layout.marginHeight = 0;
-    Group _group = new Group(container, SWT.NULL);
-    this.modifiers = _group;
-    this.modifiers.setLayout(layout);
-    GridData _gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-    this.modifiers.setLayoutData(_gridData);
-    Button m1 = new Button(this.modifiers, SWT.RADIO);
-    m1.setText("Model");
-    Button m2 = new Button(this.modifiers, SWT.RADIO);
-    m2.setText("Enum");
-    Button m3 = new Button(this.modifiers, SWT.RADIO);
-    m3.setText("Component");
+  private void addModifiersControl(final Composite parent) {
+    SWTWidgetExtensions.addLabel(parent, "Modifier", SWT.NONE);
+    Group _addGroup = SWTWidgetExtensions.addGroup(parent, SWT.NULL);
+    this.modifiers = _addGroup;
+    GridLayout _newGridLayout = SWTLayoutExtensions.newGridLayout(3, true);
+    this.modifiers.setLayout(_newGridLayout);
+    GridData _newGridData = SWTLayoutExtensions.newGridData();
+    this.modifiers.setLayoutData(_newGridData);
+    SWTWidgetExtensions.addButton(this.modifiers, "Model", SWT.RADIO);
+    SWTWidgetExtensions.addButton(this.modifiers, "Enum", SWT.RADIO);
+    SWTWidgetExtensions.addButton(this.modifiers, "Component", SWT.RADIO);
     this.modifiers.pack();
   }
   
@@ -72,10 +63,15 @@ public class ModelWizardPage extends AbstractArtifactWizardPage {
     _builder.append(_text, "");
     System.out.println(_builder);
     StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("Parent Model: ");
-    Text _parentModel = this.getParentModel();
-    String _text_1 = _parentModel.getText();
+    _builder_1.append("Model Type: ");
+    String _text_1 = this.modelType.getText();
     _builder_1.append(_text_1, "");
     System.out.println(_builder_1);
+    StringConcatenation _builder_2 = new StringConcatenation();
+    _builder_2.append("Parent Model: ");
+    Text _parentModel = this.getParentModel();
+    String _text_2 = _parentModel.getText();
+    _builder_2.append(_text_2, "");
+    System.out.println(_builder_2);
   }
 }

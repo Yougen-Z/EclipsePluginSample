@@ -10,5 +10,4 @@ class ViewWizardPage extends AbstractArtifactWizardPage {
 	override protected void addCustomControls(Composite container) {
 		addDescriptionControl(container)
 	}
-
 }

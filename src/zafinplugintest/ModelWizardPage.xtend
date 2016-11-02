@@ -1,13 +1,11 @@
 package zafinplugintest
 
 import org.eclipse.swt.SWT
-import org.eclipse.swt.layout.GridData
-import org.eclipse.swt.layout.GridLayout
-import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Combo
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Group
-import org.eclipse.swt.widgets.Label
+import com.zafin.plugin.extensionmethods.SWTWidgetExtensions
+import com.zafin.plugin.extensionmethods.SWTLayoutExtensions
 
 class ModelWizardPage extends AbstractArtifactWizardPage {
 	var Combo modelType
@@ -18,42 +16,36 @@ class ModelWizardPage extends AbstractArtifactWizardPage {
 			Messages.ModelWizardPage_)
 	}
 
-	override protected void addCustomControls(Composite container) {
-		addModelTypeControl(container)
-		addModifiersControl(container)
-		addParentModelControl(container)
+	override protected void addCustomControls(Composite parent) {
+		addModelTypeControl(parent)
+		addModifiersControl(parent)
+		addParentModelControl(parent)
 	}
 
-	def private void addModelTypeControl(Composite container) {
-		new Label(container, SWT.NONE).setText(Messages.ModelWizardPage_Type)
-		modelType = new Combo(container, SWT.DROP_DOWN.bitwiseOr(SWT.READ_ONLY))
-		modelType.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false))
-		var String[] items = #[Messages.ModelWizardPage_ModelType_Model, Messages.ModelWizardPage_ModelType_Component,
-			Messages.ModelWizardPage_ModelType_Enum]
-		modelType.setItems(items)
-		modelType.setEnabled(true)
+	def private void addModelTypeControl(Composite parent) {
+		SWTWidgetExtensions.addLabel(parent, Messages.ModelWizardPage_Type, SWT.NONE)
+		modelType.setLayoutData(SWTLayoutExtensions.newGridData)
+		var String[] items = #[Messages.ModelWizardPage_ModelType_Model, 
+								Messages.ModelWizardPage_ModelType_Component,
+								Messages.ModelWizardPage_ModelType_Enum]
+		modelType = SWTWidgetExtensions.addCombo(parent, items, SWT.DROP_DOWN.bitwiseOr(SWT.READ_ONLY))
 	}
 
-	def private void addModifiersControl(Composite container) {
-		new Label(container, SWT.NONE).setText("Modifier:")
-		var layout = new GridLayout(3, true)
-		layout.marginWidth = 0
-		layout.marginHeight = 0
-		modifiers = new Group(container, SWT.NULL)
-		modifiers.setLayout(layout)
-		modifiers.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false))
-		var m1 = new Button(modifiers, SWT.RADIO)
-		m1.setText("Model")
-		var m2 = new Button(modifiers, SWT.RADIO)
-		m2.setText("Enum")
-		var m3 = new Button(modifiers, SWT.RADIO)
-		m3.setText("Component")
+	def private void addModifiersControl(Composite parent) {
+		SWTWidgetExtensions.addLabel(parent, "Modifier", SWT.NONE)
+		modifiers = SWTWidgetExtensions.addGroup(parent, SWT.NULL)
+		modifiers.layout = SWTLayoutExtensions.newGridLayout(3, true)
+		modifiers.layoutData = SWTLayoutExtensions.newGridData
+		SWTWidgetExtensions.addButton(modifiers, "Model", SWT::RADIO)
+		SWTWidgetExtensions.addButton(modifiers, "Enum", SWT::RADIO)
+		SWTWidgetExtensions.addButton(modifiers, "Component", SWT::RADIO)
 		modifiers.pack()
 	}
 
 	override void displayResult() {
 		super.displayResult()
 		System.out.println('''Modifier: «modifiers.text»''')
+		System.out.println('''Model Type: «modelType.text»''')
 		System.out.println('''Parent Model: «parentModel.text»''')
 	}
 

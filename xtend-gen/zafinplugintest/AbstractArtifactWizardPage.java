@@ -1,12 +1,15 @@
 package zafinplugintest;
 
+import com.zafin.plugin.extensionmethods.SWTLayoutExtensions;
+import com.zafin.plugin.extensionmethods.SWTWidgetExtensions;
+import java.util.Collections;
+import java.util.List;
+import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -15,14 +18,15 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Conversions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @Accessors(AccessorType.PUBLIC_GETTER)
@@ -32,13 +36,13 @@ public abstract class AbstractArtifactWizardPage extends WizardPage {
   
   private Text modelName;
   
-  private StyledText description1;
+  private StyledText wizardDescription;
   
   private Combo namespace;
   
-  private String selectedDir = "C:/zplatform-develop/ws";
-  
   private Text parentModel;
+  
+  private SWTWidgetExtensions swtWidgetExtensions = new SWTWidgetExtensions();
   
   public AbstractArtifactWizardPage(final String title, final String description, final String artifactType) {
     super(title);
@@ -49,35 +53,33 @@ public abstract class AbstractArtifactWizardPage extends WizardPage {
   
   @Override
   public void createControl(final Composite parent) {
-    Composite container = new Composite(parent, SWT.NULL);
-    GridLayout layout = new GridLayout(2, false);
+    Composite child = SWTWidgetExtensions.addChildComposite(parent);
+    GridLayout layout = SWTLayoutExtensions.newGridLayout(2, false);
     layout.marginWidth = 0;
-    container.setLayout(layout);
-    this.addNamespaceControl(container);
-    this.addNameControl(container);
-    this.addCustomControls(container);
-    this.setControl(container);
+    child.setLayout(layout);
+    this.addNamespaceControl(child);
+    this.addNameControl(child);
+    this.addCustomControls(child);
+    this.setControl(child);
     this.setPageComplete(false);
   }
   
-  private void addNamespaceControl(final Composite container) {
-    Label _label = new Label(container, SWT.NONE);
-    _label.setText("Namespace");
-    Combo _combo = new Combo(container, (SWT.DROP_DOWN | SWT.READ_ONLY));
-    this.namespace = _combo;
-    GridData _gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-    this.namespace.setLayoutData(_gridData);
-    String[] items = { "C:/workspace/", "D:/workspace/", "E:/" };
-    this.namespace.setItems(items);
-    this.namespace.setEnabled(true);
+  private void addNamespaceControl(final Composite parent) {
+    SWTWidgetExtensions.addLabel(parent, "Namespace", SWT.NONE);
+    List<String> items = Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("C:/workspace/", "D:/workspace/", "E:/"));
+    final List<String> _converted_items = (List<String>)items;
+    Combo _addCombo = SWTWidgetExtensions.addCombo(parent, ((String[])Conversions.unwrapArray(_converted_items, String.class)), (SWT.DROP_DOWN | SWT.READ_ONLY));
+    this.namespace = _addCombo;
+    GridData _newGridData = SWTLayoutExtensions.newGridData();
+    this.namespace.setLayoutData(_newGridData);
   }
   
-  private void addNameControl(final Composite container) {
-    Label label1 = new Label(container, SWT.NONE);
-    label1.setText("Name");
-    Text _text = new Text(container, (SWT.BORDER | SWT.SINGLE));
-    this.modelName = _text;
-    this.modelName.setText("");
+  private void addNameControl(final Composite parent) {
+    SWTWidgetExtensions.addLabel(parent, "Name", SWT.NONE);
+    Text _addText = SWTWidgetExtensions.addText(parent, "", (SWT.BORDER | SWT.SINGLE));
+    this.modelName = _addText;
+    GridData _newGridData = SWTLayoutExtensions.newGridData(GridData.FILL_HORIZONTAL);
+    this.modelName.setLayoutData(_newGridData);
     this.modelName.addKeyListener(new KeyListener() {
       @Override
       public void keyPressed(final KeyEvent e) {
@@ -93,66 +95,41 @@ public abstract class AbstractArtifactWizardPage extends WizardPage {
         }
       }
     });
-    GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-    this.modelName.setLayoutData(gd);
   }
   
-  protected void addCustomControls(final Composite container) {
+  protected void addCustomControls(final Composite parent) {
   }
   
-  public void addDescriptionControl(final Composite container) {
-    Label _label = new Label(container, SWT.NONE);
-    _label.setText("Description");
-    StyledText _styledText = new StyledText(container, 
+  public void addDescriptionControl(final Composite parent) {
+    SWTWidgetExtensions.addLabel(parent, "Description", SWT.NONE);
+    StyledText _addStyledText = SWTWidgetExtensions.addStyledText(parent, 
+      "Description for the model", 
       ((((SWT.MULTI | SWT.WRAP) | SWT.BORDER) | SWT.H_SCROLL) | SWT.V_SCROLL));
-    this.description1 = _styledText;
-    GridData _gridData = new GridData(GridData.FILL_BOTH);
-    this.description1.setLayoutData(_gridData);
-    this.description1.setText("Description for the model");
-    final Function1<ModifyEvent, Object> _function = (ModifyEvent e) -> {
-      return null;
-    };
-    this.description1.addModifyListener(((ModifyListener) new ModifyListener() {
-        public void modifyText(ModifyEvent e) {
-          _function.apply(e);
-        }
-    }));
+    this.wizardDescription = _addStyledText;
+    GridData _newGridData = SWTLayoutExtensions.newGridData(GridData.FILL_BOTH);
+    this.wizardDescription.setLayoutData(_newGridData);
   }
   
-  public void addParentModelControl(final Composite container) {
-    Label _label = new Label(container, SWT.NONE);
-    _label.setText("Parent Model: ");
-    Composite child = new Composite(container, SWT.FILL);
-    RowLayout layout = new RowLayout();
-    layout.marginWidth = 0;
-    layout.marginHeight = 0;
-    child.setLayout(layout);
-    GridData _gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-    child.setLayoutData(_gridData);
-    Text _text = new Text(child, SWT.NULL);
-    this.parentModel = _text;
-    Button button = new Button(child, SWT.PUSH);
-    button.setText("Browse...");
-    final Function1<Event, String> _function = (Event event) -> {
-      String _xblockexpression = null;
-      {
-        Shell _shell = container.getShell();
-        DirectoryDialog directoryDialog = new DirectoryDialog(_shell);
-        directoryDialog.setFilterPath(this.selectedDir);
-        directoryDialog.setMessage("directory message here");
-        String dir = directoryDialog.open();
-        String _xifexpression = null;
-        if ((dir != null)) {
-          String _xblockexpression_1 = null;
-          {
-            this.parentModel.setText(dir);
-            _xblockexpression_1 = this.selectedDir = dir;
-          }
-          _xifexpression = _xblockexpression_1;
-        }
-        _xblockexpression = _xifexpression;
+  public void addParentModelControl(final Composite parent) {
+    SWTWidgetExtensions.addLabel(parent, "Parent Model", SWT.NONE);
+    Composite child = SWTWidgetExtensions.addChildComposite(parent, SWT.FILL);
+    RowLayout _newRowLayout = SWTLayoutExtensions.newRowLayout();
+    child.setLayout(_newRowLayout);
+    GridData _newGridData = SWTLayoutExtensions.newGridData();
+    child.setLayoutData(_newGridData);
+    Text _addText = SWTWidgetExtensions.addText(child, SWT.NULL);
+    this.parentModel = _addText;
+    Button button = SWTWidgetExtensions.addButton(child, "Browse...", SWT.PUSH);
+    final Procedure1<Event> _function = (Event event) -> {
+      IWizardContainer _container = this.getContainer();
+      Shell _shell = _container.getShell();
+      DirectoryDialog directoryDialog = new DirectoryDialog(_shell);
+      directoryDialog.setFilterPath("C:/zplatform-develop/ws");
+      directoryDialog.setMessage("directory message here");
+      String dir = directoryDialog.open();
+      if ((dir != null)) {
+        this.parentModel.setText(dir);
       }
-      return _xblockexpression;
     };
     button.addListener(SWT.Selection, ((Listener) new Listener() {
         public void handleEvent(Event event) {
@@ -187,8 +164,8 @@ public abstract class AbstractArtifactWizardPage extends WizardPage {
   }
   
   @Pure
-  public StyledText getDescription1() {
-    return this.description1;
+  public StyledText getWizardDescription() {
+    return this.wizardDescription;
   }
   
   @Pure
@@ -197,12 +174,12 @@ public abstract class AbstractArtifactWizardPage extends WizardPage {
   }
   
   @Pure
-  public String getSelectedDir() {
-    return this.selectedDir;
+  public Text getParentModel() {
+    return this.parentModel;
   }
   
   @Pure
-  public Text getParentModel() {
-    return this.parentModel;
+  public SWTWidgetExtensions getSwtWidgetExtensions() {
+    return this.swtWidgetExtensions;
   }
 }

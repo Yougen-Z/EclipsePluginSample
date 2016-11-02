@@ -5,116 +5,113 @@ import org.eclipse.swt.SWT
 import org.eclipse.swt.custom.StyledText
 import org.eclipse.swt.events.KeyEvent
 import org.eclipse.swt.events.KeyListener
-import org.eclipse.swt.events.ModifyEvent
-import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.layout.GridData
-import org.eclipse.swt.layout.GridLayout
-import org.eclipse.swt.layout.RowLayout
-import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Combo
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.DirectoryDialog
 import org.eclipse.swt.widgets.Event
-import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Listener
 import org.eclipse.swt.widgets.Text
 import org.eclipse.xtend.lib.annotations.Accessors
+import com.zafin.plugin.extensionmethods.SWTWidgetExtensions
+import com.zafin.plugin.extensionmethods.SWTLayoutExtensions
 
 @Accessors(PUBLIC_GETTER) abstract class AbstractArtifactWizardPage extends WizardPage {
 	private String artifactType
 	private Text modelName
-	private StyledText description1
+	private StyledText wizardDescription
 	private Combo namespace
-	private String selectedDir = "C:/zplatform-develop/ws"
 	private Text parentModel
+	
+	private SWTWidgetExtensions swtWidgetExtensions = new SWTWidgetExtensions()
 
 	new(String title, String description, String artifactType) {
+		
 		super(title)
-		setTitle(title)
-		setDescription(description)
+		this.title = title
+		this.description = description
 		this.artifactType = artifactType
 	}
 
 	override void createControl(Composite parent) {
-		var container = new Composite(parent, SWT::NULL)
-		var layout = new GridLayout(2, false)
+		
+		var child = SWTWidgetExtensions.addChildComposite(parent)
+		var layout = SWTLayoutExtensions.newGridLayout(2, false)
 		layout.marginWidth = 0
-		container.setLayout(layout)
-		addNamespaceControl(container)
-		addNameControl(container)
-		addCustomControls(container)
-		setControl(container)
+		child.setLayout(layout)
+		addNamespaceControl(child)
+		addNameControl(child)
+		addCustomControls(child)
+		setControl(child)
 		setPageComplete(false)
 	}
 
-	def private void addNamespaceControl(Composite container) {
-		new Label(container, SWT::NONE).setText("Namespace")
-		namespace = new Combo(container, SWT::DROP_DOWN.bitwiseOr(SWT::READ_ONLY))
-		namespace.setLayoutData(new GridData(SWT::FILL, SWT::BEGINNING, true, false))
-		var String[] items = #["C:/workspace/", "D:/workspace/", "E:/"]
-		namespace.setItems(items)
-		namespace.setEnabled(true)
+	def private void addNamespaceControl(Composite parent) {
+		
+		SWTWidgetExtensions.addLabel(parent, "Namespace", SWT.NONE)
+		var items = #["C:/workspace/", "D:/workspace/", "E:/"]
+		namespace = SWTWidgetExtensions.addCombo(parent, items, SWT::DROP_DOWN.bitwiseOr(SWT::READ_ONLY))
+		namespace.layoutData = SWTLayoutExtensions.newGridData
 	}
 
-	def private void addNameControl(Composite container) {
-		var label1 = new Label(container, SWT::NONE)
-		label1.setText("Name")
-		modelName = new Text(container, SWT::BORDER.bitwiseOr(SWT::SINGLE))
-		modelName.setText("")
+	def private void addNameControl(Composite parent) {
+		
+		SWTWidgetExtensions.addLabel(parent, "Name", SWT.NONE)
+		modelName = SWTWidgetExtensions.addText(parent, "", SWT::BORDER.bitwiseOr(SWT::SINGLE))
+		modelName.layoutData = SWTLayoutExtensions.newGridData(GridData::FILL_HORIZONTAL)
 		modelName.addKeyListener(new KeyListener() {
 			override void keyPressed(KeyEvent e) {
 			}
 
 			override void keyReleased(KeyEvent e) {
-				if (!modelName.getText().isEmpty()) {
-					setPageComplete(true)
+				if (!modelName.text.isEmpty()) {
+					pageComplete = true
 				}
-
 			}
 		})
-		var gd = new GridData(GridData::FILL_HORIZONTAL)
-		modelName.setLayoutData(gd)
 	}
 
-	def protected void addCustomControls(Composite container) {
+	def protected void addCustomControls(Composite parent) {
 		// subclasses can add more controls through this method
 	}
 
-	def void addDescriptionControl(Composite container) {
-		new Label(container, SWT::NONE).setText("Description")
-		description1 = new StyledText(container,
-			SWT::MULTI.bitwiseOr(SWT::WRAP).bitwiseOr(SWT::BORDER).bitwiseOr(SWT::H_SCROLL).bitwiseOr(SWT::V_SCROLL))
-		description1.setLayoutData(new GridData(GridData::FILL_BOTH))
-		description1.setText("Description for the model")
-		description1.addModifyListener(([ModifyEvent e|] as ModifyListener))
+	def void addDescriptionControl(Composite parent) {
+		
+		SWTWidgetExtensions.addLabel(parent, "Description", SWT.NONE)
+		wizardDescription = SWTWidgetExtensions.addStyledText(parent, 
+						"Description for the model", 
+						SWT::MULTI
+							.bitwiseOr(SWT::WRAP)
+							.bitwiseOr(SWT::BORDER)
+							.bitwiseOr(SWT::H_SCROLL)
+							.bitwiseOr(SWT::V_SCROLL))
+		wizardDescription.layoutData = SWTLayoutExtensions.newGridData(GridData::FILL_BOTH)
 	}
 
-	def void addParentModelControl(Composite container) {
-		new Label(container, SWT::NONE).setText("Parent Model: ")
-		var child = new Composite(container, SWT::FILL)
-		var layout = new RowLayout()
-		layout.marginWidth = 0
-		layout.marginHeight = 0
-		child.setLayout(layout)
-		child.setLayoutData(new GridData(SWT::FILL, SWT::BEGINNING, true, false))
-		parentModel = new Text(child, SWT::NULL)
-		var Button button = new Button(child, SWT::PUSH)
-		button.setText("Browse...")
+	def void addParentModelControl(Composite parent) {
+		
+		SWTWidgetExtensions.addLabel(parent, "Parent Model", SWT.NONE)
+		
+		var child = SWTWidgetExtensions.addChildComposite(parent, SWT::FILL)
+		child.layout = SWTLayoutExtensions.newRowLayout
+		child.layoutData = SWTLayoutExtensions.newGridData
+		
+		parentModel = SWTWidgetExtensions.addText(child, SWT::NULL)
+		var button = SWTWidgetExtensions.addButton(child, "Browse...", SWT::PUSH)		
 		button.addListener(SWT::Selection,([ Event event |
-			var directoryDialog = new DirectoryDialog(container.getShell())
-			directoryDialog.setFilterPath(selectedDir)
-			directoryDialog.setMessage("directory message here")
+			var directoryDialog = new DirectoryDialog(container.shell)
+			directoryDialog.filterPath = "C:/zplatform-develop/ws"
+			directoryDialog.message = "directory message here"
 			var dir = directoryDialog.open()
 			if (dir !== null) {
-				parentModel.setText(dir)
-				selectedDir = dir
+				parentModel.text = dir
 			}
 		] as Listener))
 	}
 
 	def void displayResult() {
+		
 		System::out.println('''Model Name: «modelName.text»'''.toString)
 		System::out.println('''Model Namespace: «namespace.text»'''.toString)
 	}
-
 }
