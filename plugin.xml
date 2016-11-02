@@ -44,7 +44,7 @@
          point="org.eclipse.ui.handlers">
       <handler
             class="handlers.NewModuleCreationHandler"
-            commandId="New_Module_Creation">
+            commandId="New_Module_Creation_id">
       </handler>
       <handler
             class="handlers.NewModelCreationHandler"
@@ -65,13 +65,11 @@
       </command>
       <command
             categoryId="Artifact"
-            defaultHandler="handlers.NewModelCreationHandler"
             id="New_Model_Creation"
             name="New Model Creation">
       </command>
       <command
             categoryId="Artifact"
-            defaultHandler="handlers.NewViewCreationHandler"
             id="New_View_Creation"
             name="New View Creation">
       </command>
