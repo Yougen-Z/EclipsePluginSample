@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import zafinplugintest.AbstractArtifactWizardPage;
 import zafinplugintest.Messages;
@@ -66,19 +67,15 @@ public class ModelWizardPage extends AbstractArtifactWizardPage {
   public void displayResult() {
     super.displayResult();
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("Model Type: ");
-    String _text = this.modelType.getText();
+    _builder.append("Modifier: ");
+    String _text = this.modifiers.getText();
     _builder.append(_text, "");
     System.out.println(_builder);
     StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("Modifier: ");
-    String _text_1 = this.modifiers.getText();
+    _builder_1.append("Parent Model: ");
+    Text _parentModel = this.getParentModel();
+    String _text_1 = _parentModel.getText();
     _builder_1.append(_text_1, "");
     System.out.println(_builder_1);
-    StringConcatenation _builder_2 = new StringConcatenation();
-    _builder_2.append("Model Type");
-    String _text_2 = this.modelType.getText();
-    _builder_2.append(_text_2, "");
-    System.out.println(_builder_2);
   }
 }

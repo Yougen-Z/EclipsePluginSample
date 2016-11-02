@@ -19,20 +19,26 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.xtend.lib.annotations.AccessorType;
+import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.Pure;
 
+@Accessors(AccessorType.PUBLIC_GETTER)
 @SuppressWarnings("all")
 public abstract class AbstractArtifactWizardPage extends WizardPage {
   private String artifactType;
   
   private Text modelName;
   
-  private StyledText description;
+  private StyledText description1;
   
-  private Combo modelType;
+  private Combo namespace;
   
   private String selectedDir = "C:/zplatform-develop/ws";
+  
+  private Text parentModel;
   
   public AbstractArtifactWizardPage(final String title, final String description, final String artifactType) {
     super(title);
@@ -58,12 +64,12 @@ public abstract class AbstractArtifactWizardPage extends WizardPage {
     Label _label = new Label(container, SWT.NONE);
     _label.setText("Namespace");
     Combo _combo = new Combo(container, (SWT.DROP_DOWN | SWT.READ_ONLY));
-    this.modelType = _combo;
+    this.namespace = _combo;
     GridData _gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-    this.modelType.setLayoutData(_gridData);
+    this.namespace.setLayoutData(_gridData);
     String[] items = { "C:/workspace/", "D:/workspace/", "E:/" };
-    this.modelType.setItems(items);
-    this.modelType.setEnabled(true);
+    this.namespace.setItems(items);
+    this.namespace.setEnabled(true);
   }
   
   private void addNameControl(final Composite container) {
@@ -99,14 +105,14 @@ public abstract class AbstractArtifactWizardPage extends WizardPage {
     _label.setText("Description");
     StyledText _styledText = new StyledText(container, 
       ((((SWT.MULTI | SWT.WRAP) | SWT.BORDER) | SWT.H_SCROLL) | SWT.V_SCROLL));
-    this.description = _styledText;
+    this.description1 = _styledText;
     GridData _gridData = new GridData(GridData.FILL_BOTH);
-    this.description.setLayoutData(_gridData);
-    this.description.setText("Description for the model");
+    this.description1.setLayoutData(_gridData);
+    this.description1.setText("Description for the model");
     final Function1<ModifyEvent, Object> _function = (ModifyEvent e) -> {
       return null;
     };
-    this.description.addModifyListener(((ModifyListener) new ModifyListener() {
+    this.description1.addModifyListener(((ModifyListener) new ModifyListener() {
         public void modifyText(ModifyEvent e) {
           _function.apply(e);
         }
@@ -123,7 +129,8 @@ public abstract class AbstractArtifactWizardPage extends WizardPage {
     child.setLayout(layout);
     GridData _gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
     child.setLayoutData(_gridData);
-    Text modelDir = new Text(child, SWT.NULL);
+    Text _text = new Text(child, SWT.NULL);
+    this.parentModel = _text;
     Button button = new Button(child, SWT.PUSH);
     button.setText("Browse...");
     final Function1<Event, String> _function = (Event event) -> {
@@ -136,7 +143,12 @@ public abstract class AbstractArtifactWizardPage extends WizardPage {
         String dir = directoryDialog.open();
         String _xifexpression = null;
         if ((dir != null)) {
-          _xifexpression = this.selectedDir = dir;
+          String _xblockexpression_1 = null;
+          {
+            this.parentModel.setText(dir);
+            _xblockexpression_1 = this.selectedDir = dir;
+          }
+          _xifexpression = _xblockexpression_1;
         }
         _xblockexpression = _xifexpression;
       }
@@ -147,7 +159,6 @@ public abstract class AbstractArtifactWizardPage extends WizardPage {
           _function.apply(event);
         }
     }));
-    modelDir.setText(this.selectedDir);
   }
   
   public void displayResult() {
@@ -158,15 +169,40 @@ public abstract class AbstractArtifactWizardPage extends WizardPage {
     String _string = _builder.toString();
     System.out.println(_string);
     StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("Model Type: ");
-    String _text_1 = this.modelType.getText();
+    _builder_1.append("Model Namespace: ");
+    String _text_1 = this.namespace.getText();
     _builder_1.append(_text_1, "");
     String _string_1 = _builder_1.toString();
     System.out.println(_string_1);
-    StringConcatenation _builder_2 = new StringConcatenation();
-    _builder_2.append("Model Type: ");
-    _builder_2.append(this.selectedDir, "");
-    String _string_2 = _builder_2.toString();
-    System.out.println(_string_2);
+  }
+  
+  @Pure
+  public String getArtifactType() {
+    return this.artifactType;
+  }
+  
+  @Pure
+  public Text getModelName() {
+    return this.modelName;
+  }
+  
+  @Pure
+  public StyledText getDescription1() {
+    return this.description1;
+  }
+  
+  @Pure
+  public Combo getNamespace() {
+    return this.namespace;
+  }
+  
+  @Pure
+  public String getSelectedDir() {
+    return this.selectedDir;
+  }
+  
+  @Pure
+  public Text getParentModel() {
+    return this.parentModel;
   }
 }

@@ -10,8 +10,8 @@ import org.eclipse.swt.widgets.Group
 import org.eclipse.swt.widgets.Label
 
 class ModelWizardPage extends AbstractArtifactWizardPage {
-	Combo modelType
-	package Group modifiers
+	var Combo modelType
+	var package Group modifiers
 
 	new() {
 		super(Messages.ModelWizardPage_WizardName_Model, Messages.ModelWizardPage_Description,
@@ -53,9 +53,8 @@ class ModelWizardPage extends AbstractArtifactWizardPage {
 
 	override void displayResult() {
 		super.displayResult()
-		System.out.println('''Model Type: «modelType.getText()»''')
-		System.out.println('''Modifier: «modifiers.getText()»''')
-		System.out.println('''Model Type«modelType.getText()»''')
+		System.out.println('''Modifier: «modifiers.text»''')
+		System.out.println('''Parent Model: «parentModel.text»''')
 	}
 
 }

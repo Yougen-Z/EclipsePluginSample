@@ -18,5 +18,8 @@ class DescriptionWizardPage extends AbstractArtifactWizardPage {
 		setControl(container)
 		setPageComplete(true)
 	}
-
+	
+	override void displayResult() {
+		System.out.println('''Description: «description1.text»''')
+	}
 }

@@ -1,7 +1,8 @@
 package zafinplugintest
 
 class NewModelWizard extends AbstractNewArtifactCreationWizard {
-	var ModelWizardPage = new ModelWizardPage()
+	var modelWizardPage = new ModelWizardPage()
+	var descriptionWizardPage = new DescriptionWizardPage()
 
 	override String getWindowTitle() {
 		"New Model Creation Wizard"
@@ -9,12 +10,13 @@ class NewModelWizard extends AbstractNewArtifactCreationWizard {
 
 	override void addPages() {
 		super.addPages()
-		ModelWizardPage.addPage
-		new DescriptionWizardPage().addPage
+		modelWizardPage.addPage
+		descriptionWizardPage.addPage
 	}
 	
 	override boolean performFinish() {
-		ModelWizardPage.displayResult
+		modelWizardPage.displayResult
+		descriptionWizardPage.displayResult
 		true
 	}
 }

@@ -18,13 +18,15 @@ import org.eclipse.swt.widgets.Event
 import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Listener
 import org.eclipse.swt.widgets.Text
+import org.eclipse.xtend.lib.annotations.Accessors
 
-abstract class AbstractArtifactWizardPage extends WizardPage {
-	String artifactType
-	Text modelName
-	StyledText description
-	Combo modelType
-	String selectedDir = "C:/zplatform-develop/ws"
+@Accessors(PUBLIC_GETTER) abstract class AbstractArtifactWizardPage extends WizardPage {
+	private String artifactType
+	private Text modelName
+	private StyledText description1
+	private Combo namespace
+	private String selectedDir = "C:/zplatform-develop/ws"
+	private Text parentModel
 
 	new(String title, String description, String artifactType) {
 		super(title)
@@ -47,11 +49,11 @@ abstract class AbstractArtifactWizardPage extends WizardPage {
 
 	def private void addNamespaceControl(Composite container) {
 		new Label(container, SWT::NONE).setText("Namespace")
-		modelType = new Combo(container, SWT::DROP_DOWN.bitwiseOr(SWT::READ_ONLY))
-		modelType.setLayoutData(new GridData(SWT::FILL, SWT::BEGINNING, true, false))
+		namespace = new Combo(container, SWT::DROP_DOWN.bitwiseOr(SWT::READ_ONLY))
+		namespace.setLayoutData(new GridData(SWT::FILL, SWT::BEGINNING, true, false))
 		var String[] items = #["C:/workspace/", "D:/workspace/", "E:/"]
-		modelType.setItems(items)
-		modelType.setEnabled(true)
+		namespace.setItems(items)
+		namespace.setEnabled(true)
 	}
 
 	def private void addNameControl(Composite container) {
@@ -80,11 +82,11 @@ abstract class AbstractArtifactWizardPage extends WizardPage {
 
 	def void addDescriptionControl(Composite container) {
 		new Label(container, SWT::NONE).setText("Description")
-		description = new StyledText(container,
+		description1 = new StyledText(container,
 			SWT::MULTI.bitwiseOr(SWT::WRAP).bitwiseOr(SWT::BORDER).bitwiseOr(SWT::H_SCROLL).bitwiseOr(SWT::V_SCROLL))
-		description.setLayoutData(new GridData(GridData::FILL_BOTH))
-		description.setText("Description for the model")
-		description.addModifyListener(([ModifyEvent e|] as ModifyListener))
+		description1.setLayoutData(new GridData(GridData::FILL_BOTH))
+		description1.setText("Description for the model")
+		description1.addModifyListener(([ModifyEvent e|] as ModifyListener))
 	}
 
 	def void addParentModelControl(Composite container) {
@@ -95,7 +97,7 @@ abstract class AbstractArtifactWizardPage extends WizardPage {
 		layout.marginHeight = 0
 		child.setLayout(layout)
 		child.setLayoutData(new GridData(SWT::FILL, SWT::BEGINNING, true, false))
-		var modelDir = new Text(child, SWT::NULL)
+		parentModel = new Text(child, SWT::NULL)
 		var Button button = new Button(child, SWT::PUSH)
 		button.setText("Browse...")
 		button.addListener(SWT::Selection,([ Event event |
@@ -104,16 +106,15 @@ abstract class AbstractArtifactWizardPage extends WizardPage {
 			directoryDialog.setMessage("directory message here")
 			var dir = directoryDialog.open()
 			if (dir !== null) {
+				parentModel.setText(dir)
 				selectedDir = dir
 			}
 		] as Listener))
-		modelDir.setText(selectedDir)
 	}
 
 	def void displayResult() {
-		System::out.println('''Model Name: «modelName.getText()»'''.toString)
-		System::out.println('''Model Type: «modelType.getText()»'''.toString)
-		System::out.println('''Model Type: «selectedDir»'''.toString)
+		System::out.println('''Model Name: «modelName.text»'''.toString)
+		System::out.println('''Model Namespace: «namespace.text»'''.toString)
 	}
 
 }

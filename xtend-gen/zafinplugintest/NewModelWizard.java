@@ -6,7 +6,9 @@ import zafinplugintest.ModelWizardPage;
 
 @SuppressWarnings("all")
 public class NewModelWizard extends AbstractNewArtifactCreationWizard {
-  private ModelWizardPage ModelWizardPage = new ModelWizardPage();
+  private ModelWizardPage modelWizardPage = new ModelWizardPage();
+  
+  private DescriptionWizardPage descriptionWizardPage = new DescriptionWizardPage();
   
   @Override
   public String getWindowTitle() {
@@ -16,16 +18,16 @@ public class NewModelWizard extends AbstractNewArtifactCreationWizard {
   @Override
   public void addPages() {
     super.addPages();
-    this.addPage(this.ModelWizardPage);
-    DescriptionWizardPage _descriptionWizardPage = new DescriptionWizardPage();
-    this.addPage(_descriptionWizardPage);
+    this.addPage(this.modelWizardPage);
+    this.addPage(this.descriptionWizardPage);
   }
   
   @Override
   public boolean performFinish() {
     boolean _xblockexpression = false;
     {
-      this.ModelWizardPage.displayResult();
+      this.modelWizardPage.displayResult();
+      this.descriptionWizardPage.displayResult();
       _xblockexpression = true;
     }
     return _xblockexpression;
