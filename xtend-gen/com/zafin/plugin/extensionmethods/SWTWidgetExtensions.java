@@ -23,33 +23,32 @@ public class SWTWidgetExtensions {
     return new Label(parent, style);
   }
   
-  public static Label addLabel(final Composite parent, final String defaultText, final int style) {
+  public static Label addLabel(final Composite parent, final String label, final int style) {
     Label _xblockexpression = null;
     {
-      Label label = new Label(parent, style);
-      label.setText(defaultText);
-      _xblockexpression = label;
+      Label newLabel = new Label(parent, style);
+      newLabel.setText(label);
+      _xblockexpression = newLabel;
     }
     return _xblockexpression;
   }
   
   public static Text addText(final Composite parent, final int style) {
-    Text _xblockexpression = null;
-    {
-      Text text = new Text(parent, style);
-      _xblockexpression = text;
-    }
-    return _xblockexpression;
+    return new Text(parent, style);
   }
   
   public static Text addText(final Composite parent, final String defaultText, final int style) {
     Text _xblockexpression = null;
     {
-      Text text = new Text(parent, style);
-      text.setText(defaultText);
-      _xblockexpression = text;
+      Text newText = new Text(parent, style);
+      newText.setText(defaultText);
+      _xblockexpression = newText;
     }
     return _xblockexpression;
+  }
+  
+  public static Button addButton(final Composite parent, final int style) {
+    return new Button(parent, style);
   }
   
   public static Button addButton(final Composite parent, final String defaultText, final int style) {
@@ -63,12 +62,7 @@ public class SWTWidgetExtensions {
   }
   
   public static StyledText addStyledText(final Composite parent, final int style) {
-    StyledText _xblockexpression = null;
-    {
-      StyledText text = new StyledText(parent, style);
-      _xblockexpression = text;
-    }
-    return _xblockexpression;
+    return new StyledText(parent, style);
   }
   
   public static StyledText addStyledText(final Composite parent, final String defaultText, final int style) {
@@ -82,13 +76,7 @@ public class SWTWidgetExtensions {
   }
   
   public static Combo addCombo(final Composite parent, final int style) {
-    Combo _xblockexpression = null;
-    {
-      Combo combo = new Combo(parent, style);
-      combo.setEnabled(true);
-      _xblockexpression = combo;
-    }
-    return _xblockexpression;
+    return new Combo(parent, style);
   }
   
   public static Combo addCombo(final Composite parent, final String[] items, final int style) {

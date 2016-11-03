@@ -111,6 +111,14 @@
                      style="push">
                </command>
             </menu>
+            <menu
+                  id="fileMenu"
+                  label="File">
+               <command
+                     commandId="de"
+                     style="push">
+               </command>
+            </menu>
          </menu>
       </menuContribution>
       <menuContribution

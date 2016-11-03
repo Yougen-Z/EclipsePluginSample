@@ -4,17 +4,24 @@ import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.RowLayout
 import org.eclipse.swt.SWT
+import org.eclipse.swt.layout.FillLayout
 
 class SWTLayoutExtensions {
+	
 	def static newGridLayout() {
 		new GridLayout
 	}
-	
+		
 	def static newGridLayout(int numColumns, boolean makeColumnsEqualWidth) {
-		var layout = new GridLayout(numColumns, makeColumnsEqualWidth)
-		layout.marginWidth = 0
-		layout.marginHeight = 0
-		layout
+		new GridLayout(numColumns, makeColumnsEqualWidth)
+	}
+	
+	def static newRowLayout() {
+		new RowLayout
+	}
+	
+	def static newFillLayout() {
+		new FillLayout
 	}
 	
 	def static newGridData() {
@@ -23,12 +30,5 @@ class SWTLayoutExtensions {
 	
 	def static newGridData(int style) {
 		new GridData(style)
-	}
-	
-	def static newRowLayout() {
-		var layout = new RowLayout()
-		layout.marginWidth = 0
-		layout.marginHeight = 0
-		layout
 	}
 }

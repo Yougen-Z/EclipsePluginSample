@@ -1,6 +1,7 @@
 package com.zafin.plugin.extensionmethods;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -12,14 +13,15 @@ public class SWTLayoutExtensions {
   }
   
   public static GridLayout newGridLayout(final int numColumns, final boolean makeColumnsEqualWidth) {
-    GridLayout _xblockexpression = null;
-    {
-      GridLayout layout = new GridLayout(numColumns, makeColumnsEqualWidth);
-      layout.marginWidth = 0;
-      layout.marginHeight = 0;
-      _xblockexpression = layout;
-    }
-    return _xblockexpression;
+    return new GridLayout(numColumns, makeColumnsEqualWidth);
+  }
+  
+  public static RowLayout newRowLayout() {
+    return new RowLayout();
+  }
+  
+  public static FillLayout newFillLayout() {
+    return new FillLayout();
   }
   
   public static GridData newGridData() {
@@ -28,16 +30,5 @@ public class SWTLayoutExtensions {
   
   public static GridData newGridData(final int style) {
     return new GridData(style);
-  }
-  
-  public static RowLayout newRowLayout() {
-    RowLayout _xblockexpression = null;
-    {
-      RowLayout layout = new RowLayout();
-      layout.marginWidth = 0;
-      layout.marginHeight = 0;
-      _xblockexpression = layout;
-    }
-    return _xblockexpression;
   }
 }
