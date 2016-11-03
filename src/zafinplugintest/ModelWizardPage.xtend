@@ -4,8 +4,8 @@ import org.eclipse.swt.SWT
 import org.eclipse.swt.widgets.Combo
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Group
-import com.zafin.plugin.extensionmethods.SWTWidgetExtensions
-import com.zafin.plugin.extensionmethods.SWTLayoutExtensions
+import static extension com.zafin.plugin.extensionmethods.SWTWidgetExtensions.*
+import static extension com.zafin.plugin.extensionmethods.SWTLayoutExtensions.*
 
 class ModelWizardPage extends AbstractArtifactWizardPage {
 	var Combo modelType
@@ -17,28 +17,28 @@ class ModelWizardPage extends AbstractArtifactWizardPage {
 	}
 
 	override protected void addCustomControls(Composite parent) {
-		addModelTypeControl(parent)
-		addModifiersControl(parent)
-		addParentModelControl(parent)
+		parent.addModelTypeControl
+		parent.addModifiersControl
+		parent.addParentModelControl
 	}
 
 	def private void addModelTypeControl(Composite parent) {
-		SWTWidgetExtensions.addLabel(parent, Messages.ModelWizardPage_Type, SWT.NONE)
-		modelType.setLayoutData(SWTLayoutExtensions.newGridData)
+		parent.addLabel(Messages.ModelWizardPage_Type, SWT.NONE)
 		var String[] items = #[Messages.ModelWizardPage_ModelType_Model, 
 								Messages.ModelWizardPage_ModelType_Component,
 								Messages.ModelWizardPage_ModelType_Enum]
-		modelType = SWTWidgetExtensions.addCombo(parent, items, SWT.DROP_DOWN.bitwiseOr(SWT.READ_ONLY))
+		modelType = parent.addCombo(items,SWT.DROP_DOWN.bitwiseOr(SWT.READ_ONLY))
+		modelType.layoutData = newGridData
 	}
 
 	def private void addModifiersControl(Composite parent) {
-		SWTWidgetExtensions.addLabel(parent, "Modifier", SWT.NONE)
-		modifiers = SWTWidgetExtensions.addGroup(parent, SWT.NULL)
-		modifiers.layout = SWTLayoutExtensions.newGridLayout(3, true)
-		modifiers.layoutData = SWTLayoutExtensions.newGridData
-		SWTWidgetExtensions.addButton(modifiers, "Model", SWT::RADIO)
-		SWTWidgetExtensions.addButton(modifiers, "Enum", SWT::RADIO)
-		SWTWidgetExtensions.addButton(modifiers, "Component", SWT::RADIO)
+		parent.addLabel("Modifier", SWT.NONE)
+		modifiers = parent.addGroup(SWT.NULL)
+		modifiers.layout = 3.newGridLayout(true)
+		modifiers.layoutData = newGridData
+		modifiers.addButton("Model", SWT::RADIO)
+		modifiers.addButton("Enum", SWT::RADIO)
+		modifiers.addButton("Component", SWT::RADIO)
 		modifiers.pack()
 	}
 

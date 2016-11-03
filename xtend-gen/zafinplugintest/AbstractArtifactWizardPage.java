@@ -42,8 +42,6 @@ public abstract class AbstractArtifactWizardPage extends WizardPage {
   
   private Text parentModel;
   
-  private SWTWidgetExtensions swtWidgetExtensions = new SWTWidgetExtensions();
-  
   public AbstractArtifactWizardPage(final String title, final String description, final String artifactType) {
     super(title);
     this.setTitle(title);
@@ -176,10 +174,5 @@ public abstract class AbstractArtifactWizardPage extends WizardPage {
   @Pure
   public Text getParentModel() {
     return this.parentModel;
-  }
-  
-  @Pure
-  public SWTWidgetExtensions getSwtWidgetExtensions() {
-    return this.swtWidgetExtensions;
   }
 }

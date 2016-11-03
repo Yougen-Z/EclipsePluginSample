@@ -33,11 +33,11 @@ public class ModelWizardPage extends AbstractArtifactWizardPage {
   
   private void addModelTypeControl(final Composite parent) {
     SWTWidgetExtensions.addLabel(parent, Messages.ModelWizardPage_Type, SWT.NONE);
-    GridData _newGridData = SWTLayoutExtensions.newGridData();
-    this.modelType.setLayoutData(_newGridData);
     String[] items = { Messages.ModelWizardPage_ModelType_Model, Messages.ModelWizardPage_ModelType_Component, Messages.ModelWizardPage_ModelType_Enum };
     Combo _addCombo = SWTWidgetExtensions.addCombo(parent, items, (SWT.DROP_DOWN | SWT.READ_ONLY));
     this.modelType = _addCombo;
+    GridData _newGridData = SWTLayoutExtensions.newGridData();
+    this.modelType.setLayoutData(_newGridData);
   }
   
   private void addModifiersControl(final Composite parent) {

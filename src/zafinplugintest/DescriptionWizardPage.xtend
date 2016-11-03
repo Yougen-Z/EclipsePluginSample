@@ -1,8 +1,8 @@
 package zafinplugintest
 
 import org.eclipse.swt.widgets.Composite
-import com.zafin.plugin.extensionmethods.SWTLayoutExtensions
-import com.zafin.plugin.extensionmethods.SWTWidgetExtensions
+import static extension com.zafin.plugin.extensionmethods.SWTLayoutExtensions.*
+import static extension com.zafin.plugin.extensionmethods.SWTWidgetExtensions.*
 
 class DescriptionWizardPage extends AbstractArtifactWizardPage {
 	new() {
@@ -10,9 +10,9 @@ class DescriptionWizardPage extends AbstractArtifactWizardPage {
 	}
 
 	override void createControl(Composite parent) {
-		var child = SWTWidgetExtensions.addChildComposite(parent)
-		child.layout = SWTLayoutExtensions.newGridLayout(2, false)
-		addDescriptionControl(child)
+		var child = parent.addChildComposite
+		child.layout = 2.newGridLayout(false)
+		child.addDescriptionControl
 		control = child
 		pageComplete = true
 	}

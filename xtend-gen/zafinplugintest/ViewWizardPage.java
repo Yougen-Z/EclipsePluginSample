@@ -7,11 +7,14 @@ import zafinplugintest.Messages;
 @SuppressWarnings("all")
 public class ViewWizardPage extends AbstractArtifactWizardPage {
   public ViewWizardPage() {
-    super(Messages.ViewWizardPage_Name, Messages.ViewWizardPage_Description, Messages.ViewWizardPage_Type);
+    super(
+      Messages.ViewWizardPage_Name, 
+      Messages.ViewWizardPage_Description, 
+      Messages.ViewWizardPage_Type);
   }
   
   @Override
-  protected void addCustomControls(final Composite container) {
-    this.addDescriptionControl(container);
+  protected void addCustomControls(final Composite parent) {
+    this.addDescriptionControl(parent);
   }
 }

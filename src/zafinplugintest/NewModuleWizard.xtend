@@ -6,7 +6,7 @@ class NewModuleWizard extends AbstractNewArtifactCreationWizard {
 	WizardNewProjectCreationPage wizardNewProjectCreationPage
 
 	new() {
-		setWindowTitle("Create a New Module")
+		windowTitle = "Create a New Module"
 	}
 
 	override void addPages() {
