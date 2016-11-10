@@ -8,6 +8,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @SuppressWarnings("all")
 public class SWTWidgetExtensions {
@@ -24,13 +26,11 @@ public class SWTWidgetExtensions {
   }
   
   public static Label addLabel(final Composite parent, final String label, final int style) {
-    Label _xblockexpression = null;
-    {
-      Label newLabel = new Label(parent, style);
-      newLabel.setText(label);
-      _xblockexpression = newLabel;
-    }
-    return _xblockexpression;
+    Label _label = new Label(parent, style);
+    final Procedure1<Label> _function = (Label it) -> {
+      it.setText(label);
+    };
+    return ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
   }
   
   public static Text addText(final Composite parent, final int style) {
@@ -38,13 +38,11 @@ public class SWTWidgetExtensions {
   }
   
   public static Text addText(final Composite parent, final String defaultText, final int style) {
-    Text _xblockexpression = null;
-    {
-      Text newText = new Text(parent, style);
-      newText.setText(defaultText);
-      _xblockexpression = newText;
-    }
-    return _xblockexpression;
+    Text _text = new Text(parent, style);
+    final Procedure1<Text> _function = (Text it) -> {
+      it.setText(defaultText);
+    };
+    return ObjectExtensions.<Text>operator_doubleArrow(_text, _function);
   }
   
   public static Button addButton(final Composite parent, final int style) {
@@ -52,13 +50,11 @@ public class SWTWidgetExtensions {
   }
   
   public static Button addButton(final Composite parent, final String defaultText, final int style) {
-    Button _xblockexpression = null;
-    {
-      Button button = new Button(parent, style);
-      button.setText(defaultText);
-      _xblockexpression = button;
-    }
-    return _xblockexpression;
+    Button _button = new Button(parent, style);
+    final Procedure1<Button> _function = (Button it) -> {
+      it.setText(defaultText);
+    };
+    return ObjectExtensions.<Button>operator_doubleArrow(_button, _function);
   }
   
   public static StyledText addStyledText(final Composite parent, final int style) {
@@ -66,13 +62,11 @@ public class SWTWidgetExtensions {
   }
   
   public static StyledText addStyledText(final Composite parent, final String defaultText, final int style) {
-    StyledText _xblockexpression = null;
-    {
-      StyledText text = new StyledText(parent, style);
-      text.setText(defaultText);
-      _xblockexpression = text;
-    }
-    return _xblockexpression;
+    StyledText _styledText = new StyledText(parent, style);
+    final Procedure1<StyledText> _function = (StyledText it) -> {
+      it.setText(defaultText);
+    };
+    return ObjectExtensions.<StyledText>operator_doubleArrow(_styledText, _function);
   }
   
   public static Combo addCombo(final Composite parent, final int style) {
@@ -80,13 +74,11 @@ public class SWTWidgetExtensions {
   }
   
   public static Combo addCombo(final Composite parent, final String[] items, final int style) {
-    Combo _xblockexpression = null;
-    {
-      Combo combo = SWTWidgetExtensions.addCombo(parent, style);
-      combo.setItems(items);
-      _xblockexpression = combo;
-    }
-    return _xblockexpression;
+    Combo _addCombo = SWTWidgetExtensions.addCombo(parent, style);
+    final Procedure1<Combo> _function = (Combo it) -> {
+      it.setItems(items);
+    };
+    return ObjectExtensions.<Combo>operator_doubleArrow(_addCombo, _function);
   }
   
   public static Group addGroup(final Composite parent, final int style) {

@@ -15,42 +15,52 @@ import org.eclipse.swt.widgets.Text
 import org.eclipse.xtend.lib.annotations.Accessors
 import static extension com.zafin.plugin.extensionmethods.SWTWidgetExtensions.*
 import static extension com.zafin.plugin.extensionmethods.SWTLayoutExtensions.*
+import org.eclipse.swt.widgets.Label
 
 @Accessors(PUBLIC_GETTER) abstract class AbstractArtifactWizardPage extends WizardPage {
-	private String artifactType
 	private Text modelName
 	private StyledText wizardDescription
 	private Combo namespace
 	private Text parentModel
 	
-
-	new(String title, String description, String artifactType) {
+	new(String title, String description) {
 		
 		super(title)
 		this.title = title
 		this.description = description
-		this.artifactType = artifactType
 	}
 
 	override void createControl(Composite parent) {
+		val nclo = 2 // numColumns
+		val mwidth = 0 //marginWidth
 		
-		var child = parent.addChildComposite
-		var layout = 2.newGridLayout(false)
-		layout.marginWidth = 0
-		child.layout = layout
-		child.addNamespaceControl
-		child.addNameControl
-		child.addCustomControls
-		child.setControl
+		parent.addChildComposite => [
+			layout = newGridLayout => [
+			numColumns = nclo
+			makeColumnsEqualWidth = false
+			marginWidth = mwidth
+			]
+			
+			addNamespaceControl
+			addNameControl
+			addCustomControls
+			createLine(nclo)
+			addOpenInEditorCheckbox
+			
+			setControl
+		]		
 		pageComplete = false
 	}
 
-	def private void addNamespaceControl(Composite parent) {
+	def private void addNamespaceControl(Composite parent) {		
+		val items = #["C:/workspace/", "D:/workspace/", "E:/"]
 		
-		parent.addLabel("Namespace", SWT.NONE)
-		var items = #["C:/workspace/", "D:/workspace/", "E:/"]
-		namespace = parent.addCombo(items, SWT::DROP_DOWN.bitwiseOr(SWT::READ_ONLY))
-		namespace.layoutData = newGridData
+		parent => [
+			addLabel("Namespace", SWT.NONE)
+			namespace = addCombo(items, SWT::DROP_DOWN.bitwiseOr(SWT::READ_ONLY)) => [
+				layoutData = newGridData
+			]
+		]
 	}
 
 	def private void addNameControl(Composite parent) {
@@ -91,21 +101,51 @@ import static extension com.zafin.plugin.extensionmethods.SWTLayoutExtensions.*
 		
 		parent.addLabel("Parent Model", SWT.NONE)
 		
-		var child = parent.addChildComposite(SWT::FILL)
-		child.layout = newRowLayout
-		child.layoutData = newGridData
-		
-		parentModel = child.addText(SWT::NULL)
-		var button = child.addButton("Browse...", SWT::PUSH)		
-		button.addListener(SWT::Selection,([ Event event |
-			var directoryDialog = new DirectoryDialog(container.shell)
-			directoryDialog.filterPath = "C:/zplatform-develop/ws"
-			directoryDialog.message = "directory message here"
-			var dir = directoryDialog.open()
-			if (dir !== null) {
-				parentModel.text = dir
-			}
-		] as Listener))
+		parent.addChildComposite(SWT::FILL) => [			
+			layout = newGridLayout
+			layoutData = newGridData
+			parentModel = addText(SWT::NULL)
+			addButton("Browse...", SWT::PUSH) => [
+				addListener(SWT::Selection,([ Event event |
+					var directoryDialog = new DirectoryDialog(container.shell)
+					directoryDialog.filterPath = "C:/zplatform-develop/ws"
+					directoryDialog.message = "directory message here"
+					var dir = directoryDialog.open()
+					if (dir !== null) {
+						parentModel.text = dir
+					}
+				] as Listener))
+			]
+		]
+//		var button = child.addButton("Browse...", SWT::PUSH)		
+//		button.addListener(SWT::Selection,([ Event event |
+//			var directoryDialog = new DirectoryDialog(container.shell)
+//			directoryDialog.filterPath = "C:/zplatform-develop/ws"
+//			directoryDialog.message = "directory message here"
+//			var dir = directoryDialog.open()
+//			if (dir !== null) {
+//				parentModel.text = dir
+//			}
+//		] as Listener))
+	}
+
+	def void addOpenInEditorCheckbox(Composite parent) {
+		parent.addButton(SWT::CHECK) => [
+			text = "Open artifact in editor"
+			selection = true
+		]
+	}
+	
+	def void createLine(Composite parent, int ncol) 
+	{
+		parent.addLabel(SWT::SEPARATOR
+			.bitwiseOr(SWT::HORIZONTAL)
+			.bitwiseOr(SWT::BOLD)) => [
+				
+			layoutData = newGridData(GridData.FILL_HORIZONTAL) => [
+				horizontalSpan = ncol
+			]
+		]
 	}
 
 	def void displayResult() {

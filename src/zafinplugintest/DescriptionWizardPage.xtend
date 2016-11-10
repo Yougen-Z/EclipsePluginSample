@@ -6,14 +6,19 @@ import static extension com.zafin.plugin.extensionmethods.SWTWidgetExtensions.*
 
 class DescriptionWizardPage extends AbstractArtifactWizardPage {
 	new() {
-		super("New Model", "Create a model artifact", "model type")
+		super("New Model", "Create a model artifact")
 	}
 
 	override void createControl(Composite parent) {
-		var child = parent.addChildComposite
-		child.layout = 2.newGridLayout(false)
-		child.addDescriptionControl
-		control = child
+		
+		control = parent.addChildComposite => [
+			layout = newGridLayout => [
+				numColumns = 2
+				makeColumnsEqualWidth = false
+			]
+			
+			addDescriptionControl
+		]
 		pageComplete = true
 	}
 	

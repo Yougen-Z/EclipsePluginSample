@@ -44,7 +44,7 @@
          point="org.eclipse.ui.handlers">
       <handler
             class="handlers.NewModuleCreationHandler"
-            commandId="New_Module_Creation_id">
+            commandId="New_Module_Creation">
       </handler>
       <handler
             class="handlers.NewModelCreationHandler"
@@ -58,21 +58,24 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            categoryId="Module"
-            defaultHandler="handlers.NewModuleCreationHandler"
+            categoryId="com.command.zafin.wizard"
             id="New_Module_Creation"
             name="New Module Creation">
       </command>
       <command
-            categoryId="Artifact"
+            categoryId="com.command.zafin.wizard"
             id="New_Model_Creation"
             name="New Model Creation">
       </command>
       <command
-            categoryId="Artifact"
+            categoryId="com.command.zafin.wizard"
             id="New_View_Creation"
             name="New View Creation">
       </command>
+      <category
+            id="com.command.zafin.wizard"
+            name="Zafin Wizard">
+      </category>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -81,7 +84,7 @@
             locationURI="menu:org.eclipse.ui.main.menu?after=window">
          <menu
                id="Zafin_Wizards"
-               label="Zafin Wizards">
+               label="Zafin Wizards2">
             <command
                   commandId="New_Module_Creation"
                   icon="icons/open_console_obj.png"
@@ -108,14 +111,6 @@
                      id="New_View_Creation_In_Menu"
                      label="New View Creation In Menu"
                      mnemonic="V"
-                     style="push">
-               </command>
-            </menu>
-            <menu
-                  id="fileMenu"
-                  label="File">
-               <command
-                     commandId="de"
                      style="push">
                </command>
             </menu>

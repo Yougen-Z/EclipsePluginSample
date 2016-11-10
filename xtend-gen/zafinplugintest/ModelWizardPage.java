@@ -10,6 +10,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import zafinplugintest.AbstractArtifactWizardPage;
 import zafinplugintest.Messages;
 
@@ -20,15 +22,17 @@ public class ModelWizardPage extends AbstractArtifactWizardPage {
   Group modifiers;
   
   public ModelWizardPage() {
-    super(Messages.ModelWizardPage_WizardName_Model, Messages.ModelWizardPage_Description, 
-      Messages.ModelWizardPage_);
+    super(Messages.ModelWizardPage_WizardName_Model, Messages.ModelWizardPage_Description);
   }
   
   @Override
   protected void addCustomControls(final Composite parent) {
-    this.addModelTypeControl(parent);
-    this.addModifiersControl(parent);
-    this.addParentModelControl(parent);
+    final Procedure1<Composite> _function = (Composite it) -> {
+      this.addModelTypeControl(it);
+      this.addModifiersControl(it);
+      this.addParentModelControl(it);
+    };
+    ObjectExtensions.<Composite>operator_doubleArrow(parent, _function);
   }
   
   private void addModelTypeControl(final Composite parent) {
@@ -44,8 +48,13 @@ public class ModelWizardPage extends AbstractArtifactWizardPage {
     SWTWidgetExtensions.addLabel(parent, "Modifier", SWT.NONE);
     Group _addGroup = SWTWidgetExtensions.addGroup(parent, SWT.NULL);
     this.modifiers = _addGroup;
-    GridLayout _newGridLayout = SWTLayoutExtensions.newGridLayout(3, true);
-    this.modifiers.setLayout(_newGridLayout);
+    GridLayout _newGridLayout = SWTLayoutExtensions.newGridLayout();
+    final Procedure1<GridLayout> _function = (GridLayout it) -> {
+      it.numColumns = 3;
+      it.makeColumnsEqualWidth = true;
+    };
+    GridLayout _doubleArrow = ObjectExtensions.<GridLayout>operator_doubleArrow(_newGridLayout, _function);
+    this.modifiers.setLayout(_doubleArrow);
     GridData _newGridData = SWTLayoutExtensions.newGridData();
     this.modifiers.setLayoutData(_newGridData);
     SWTWidgetExtensions.addButton(this.modifiers, "Model", SWT.RADIO);

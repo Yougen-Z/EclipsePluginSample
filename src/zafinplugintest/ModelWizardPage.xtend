@@ -12,14 +12,15 @@ class ModelWizardPage extends AbstractArtifactWizardPage {
 	var package Group modifiers
 
 	new() {
-		super(Messages.ModelWizardPage_WizardName_Model, Messages.ModelWizardPage_Description,
-			Messages.ModelWizardPage_)
+		super(Messages.ModelWizardPage_WizardName_Model, Messages.ModelWizardPage_Description)
 	}
 
 	override protected void addCustomControls(Composite parent) {
-		parent.addModelTypeControl
-		parent.addModifiersControl
-		parent.addParentModelControl
+		parent => [
+			addModelTypeControl
+			addModifiersControl
+			addParentModelControl
+		]
 	}
 
 	def private void addModelTypeControl(Composite parent) {
@@ -34,7 +35,10 @@ class ModelWizardPage extends AbstractArtifactWizardPage {
 	def private void addModifiersControl(Composite parent) {
 		parent.addLabel("Modifier", SWT.NONE)
 		modifiers = parent.addGroup(SWT.NULL)
-		modifiers.layout = 3.newGridLayout(true)
+		modifiers.layout = newGridLayout => [
+			numColumns = 3
+			makeColumnsEqualWidth = true
+		]
 		modifiers.layoutData = newGridData
 		modifiers.addButton("Model", SWT::RADIO)
 		modifiers.addButton("Enum", SWT::RADIO)

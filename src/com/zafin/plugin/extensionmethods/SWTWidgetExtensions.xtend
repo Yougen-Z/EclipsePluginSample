@@ -24,9 +24,9 @@ class SWTWidgetExtensions {
 	}
 	
 	def static addLabel(Composite parent, String label, int style) {
-		var newLabel = new Label(parent, style)
-		newLabel.text = label
-		newLabel
+		new Label(parent, style) => [
+		    text = label
+		]
 	}
 	
 	def static addText(Composite parent, int style) {
@@ -34,9 +34,9 @@ class SWTWidgetExtensions {
 	}
 	
 	def static addText(Composite parent, String defaultText, int style) {
-		var newText = new Text(parent, style)
-		newText.text = defaultText
-		newText
+		new Text(parent, style) => [
+		    text = defaultText
+		]
 	}
 	
 	def static addButton(Composite parent, int style) {
@@ -44,9 +44,9 @@ class SWTWidgetExtensions {
 	}
 	
 	def static addButton(Composite parent, String defaultText, int style) {
-		var button = new Button(parent, style)
-		button.text = defaultText
-		button
+		new Button(parent, style) => [
+		    text = defaultText
+		]
 	}
 	
 	def static addStyledText(Composite parent, int style) {
@@ -54,9 +54,9 @@ class SWTWidgetExtensions {
 	}
 	
 	def static addStyledText(Composite parent, String defaultText, int style) {
-		var text = new StyledText(parent, style)
-		text.text = defaultText
-		text
+		new StyledText(parent, style) => [
+		    text = defaultText
+		]
 	}
 	
 	def static addCombo(Composite parent, int style) {
@@ -64,9 +64,9 @@ class SWTWidgetExtensions {
 	}
 	
 	def static addCombo(Composite parent, String[] items, int style) {
-		var combo = addCombo(parent, style)
-		combo.items = items
-		combo
+		addCombo(parent, style) => [
+		    it.items = items
+		]
 	}
 	
 	def static addGroup(Composite parent, int style) {
